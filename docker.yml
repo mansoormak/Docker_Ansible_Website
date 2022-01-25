@@ -1,0 +1,98 @@
+---
+- hosts: Ubuntu
+  become: true
+  vars:
+    container_name: docker
+    container_image: httpd:latest
+
+  tasks:
+    - name: Install required system packages
+      apt: 
+        name: "{{ item }}"
+        state: latest 
+        update_cache: yes
+      with_items: 
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+        - python3-pip
+        - virtualenv
+        - python3-setuptools
+        - unzip
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu xenial stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        update_cache: yes 
+        name: docker-ce
+        state: latest
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+#Configuring Apache
+    - name: "Virtualhost entry"
+      template:
+        src: virtual_host.tmp
+        dest: /home/ubuntu/roshanjosephtk.conf
+    
+    - name: "httpd conf"
+      template:
+        src: httpd.tmp
+        dest: /home/ubuntu/httpd.conf
+
+#Configuring Website
+    - name: "Creating document root"
+      file:
+        path: "/var/www/html/roshanjoseph.tk"
+        state: directory
+
+    - name: "Website - Downloading Archive file"
+      get_url:
+        url: https://templatemo.com/tm-zip-files-2020/templatemo_518_sentra.zip
+        dest: /tmp/website.zip
+
+    - name: "Extracting zip file"
+      unarchive:
+        remote_src: true
+        src: /tmp/website.zip
+        dest: /tmp/
+
+    - name: "Copying website files"
+      copy:
+        src: /tmp/templatemo_518_sentra/
+        dest: "/var/www/html/roshanjoseph.tk/"
+        remote_src: true
+        owner: www-data
+        group: www-data
+
+    - name: Pull default Docker image
+      docker_image:
+        name: "{{ container_image }}"
+        source: pull
+
+    - name: "Create Apache container"
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ container_image }}"
+        state: started
+        ports:
+          - "80:80"
+        volumes:
+          - /var/www/html/roshanjoseph.tk/:/usr/local/apache2/htdocs/
+          - /home/ubuntu/roshanjosephtk.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+          - /home/ubuntu/httpd.conf:/usr/local/apache2/conf/httpd.conf
+        restart: yes
+
+

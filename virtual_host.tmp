@@ -1,0 +1,7 @@
+<virtualhost *:80>
+    
+    servername roshanjoseph.tk
+    Documentroot /usr/local/apache2/htdocs
+    Directoryindex index.php index.html
+
+</virtualhost>

@@ -30,7 +30,7 @@ A simple website using ansible and docker on Ubuntu EC2
 
 >-/var/www/html/mak.tk/:/usr/local/apache2/htdocs/
 
->-/home/ubuntu/roshanjosephtk.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+>-/home/ubuntu/mak.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
 
 >-/home/ubuntu/httpd.conf:/usr/local/apache2/conf/httpd.conf
 

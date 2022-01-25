@@ -45,7 +45,7 @@
     - name: "Virtualhost entry"
       template:
         src: virtual_host.tmp
-        dest: /home/ubuntu/roshanjosephtk.conf
+        dest: /home/ubuntu/mak.conf
     
     - name: "httpd conf"
       template:
@@ -55,7 +55,7 @@
 #Configuring Website
     - name: "Creating document root"
       file:
-        path: "/var/www/html/roshanjoseph.tk"
+        path: "/var/www/html/mak.tk"
         state: directory
 
     - name: "Website - Downloading Archive file"
@@ -72,7 +72,7 @@
     - name: "Copying website files"
       copy:
         src: /tmp/templatemo_518_sentra/
-        dest: "/var/www/html/roshanjoseph.tk/"
+        dest: "/var/www/html/mak.tk/"
         remote_src: true
         owner: www-data
         group: www-data
@@ -90,8 +90,8 @@
         ports:
           - "80:80"
         volumes:
-          - /var/www/html/roshanjoseph.tk/:/usr/local/apache2/htdocs/
-          - /home/ubuntu/roshanjosephtk.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+          - /var/www/html/mak.tk/:/usr/local/apache2/htdocs/
+          - /home/ubuntu/mak.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
           - /home/ubuntu/httpd.conf:/usr/local/apache2/conf/httpd.conf
         restart: yes
 

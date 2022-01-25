@@ -28,14 +28,14 @@ A simple website using ansible and docker on Ubuntu EC2
 ---------------------------------------------------------------------
 >volumes:
 
->-/var/www/html/roshanjoseph.tk/:/usr/local/apache2/htdocs/
+>-/var/www/html/mak.tk/:/usr/local/apache2/htdocs/
 
 >-/home/ubuntu/roshanjosephtk.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
 
 >-/home/ubuntu/httpd.conf:/usr/local/apache2/conf/httpd.conf
 
- - Extracts the website to `/var/www/html/roshanjoseph.tk/` in the Host EC2 and mounted as volume to docker  in `/usr/local/apache2/htdocs/`
+ - Extracts the website to `/var/www/html/mak.tk/` in the Host EC2 and mounted as volume to docker  in `/usr/local/apache2/htdocs/`
 
  - Custom `httpd.tmp` is copied as `/home/ubuntu/httpd.conf` to Host EC2 and mounted as volume to docker in `/usr/local/apache2/conf/httpd.conf`
 
- - Custom `virtual_host.tmp` is copied as `/home/ubuntu/roshanjosephtk.conf`  to Host EC2 and mounted as volume to docker in `/usr/local/apache2/conf/extra/httpd-vhosts.conf`
+ - Custom `virtual_host.tmp` is copied as `/home/ubuntu/mak.conf`  to Host EC2 and mounted as volume to docker in `/usr/local/apache2/conf/extra/httpd-vhosts.conf`
